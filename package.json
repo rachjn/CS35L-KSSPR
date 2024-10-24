@@ -7,11 +7,12 @@
   ],
   "scripts": {
     "format": "prettier --write .",
-    "dev": "npm run dev --workspaces",
-    "build": "npm run build --workspaces --if-present",
-    "start": "npm run start --workspaces"
+    "dev": "concurrently \"npm -w client run dev\" \"npm -w server run dev\"",
+    "build": "npm -w client run build",
+    "start": "concurrently \"npm -w client start\" \"npm -w server start\""
   },
   "devDependencies": {
+    "concurrently": "^9.0.1",
     "prettier": "^3.3.3"
   },
   "prettier": {}
