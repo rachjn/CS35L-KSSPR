@@ -20,11 +20,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <head>
+        <link rel="stylesheet" href="https://use.typekit.net/org5cfx.css" />
+        <link rel="stylesheet" href="https://use.typekit.net/cdd6oyg.css" />
+      </head>
+      <body className="font-greycliff">{children}</body>
     </html>
   );
 }
