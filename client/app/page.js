@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { LuCheck } from "react-icons/lu";
+
 
 export default function Home() {
   return (
@@ -25,14 +27,15 @@ export default function Home() {
             >
               {/* ON HOVER - display checkmark */}
               <Link
-                id="checkbox"
-                className="h-10 w-10 border border-black bg-white"
-                href="/region"
-              />
+              id="checkbox"
+              className="h-10 w-10 border border-black bg-white flex items-center justify-center group"
+              href="/region"
+            >
+              <LuCheck className="h-7 w-7 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </Link>
 
               <div
-                className="text-4xl font-bold text-white text-outline
-"
+                className="text-4xl font-bold text-white text-outline"
               >
                 i am not a robot
               </div>
