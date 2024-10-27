@@ -5,7 +5,7 @@ import { LuUser } from "react-icons/lu";
 
 function RegionSquare({ name, color }) {
   // Convert the region name to a URL-friendly format
-  const regionParam = name.toLowerCase().replace(/\s+/g, '-');
+  const regionParam = name.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <Link

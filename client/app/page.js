@@ -1,5 +1,3 @@
-
-
 import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
