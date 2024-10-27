@@ -28,9 +28,9 @@ export default function GameInterface() {
 
             {/* Text Input Area */}
             <div className="flex flex-col gap-4">
-                {/* Area where robot words show up */}
+                {/* Area where words show up if we are doing it */}
                 <div className="min-h-20 border border-black p-4 bg-gray-100">
-                    <Text className="text-lg">Robot words show up here...</Text>
+                    <Text className="text-lg"> words show up here maybe...</Text>
                 </div>
 
                 {/* User input field */}
