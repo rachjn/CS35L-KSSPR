@@ -1,6 +1,7 @@
 "use client";
 
 import { Text } from "@/components/Text";
+import { getFileURL } from "@/lib/media";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -22,6 +23,8 @@ export default function GameInterface() {
           {displayRegion}: {displayRegion} Accent
         </Text>
       </div>
+
+      <audio controls src={getFileURL("veracruz_1.opus")} />
 
       {/* Score Block */}
       <div className="border border-black p-4 bg-white">
