@@ -5,6 +5,11 @@ import { getFileURL } from "@/lib/media";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
+const regionToAudio = {
+  africa: "nigeria_2.opus",
+  "north-america": "veracruz_1.opus",
+};
+
 export default function GameInterface() {
   const searchParams = useSearchParams();
   const region = searchParams.get("region");
@@ -24,7 +29,7 @@ export default function GameInterface() {
         </Text>
       </div>
 
-      <audio controls src={getFileURL("veracruz_1.opus")} />
+      <audio controls src={getFileURL(regionToAudio[region])} />
 
       {/* Score Block */}
       <div className="border border-black p-4 bg-white">
