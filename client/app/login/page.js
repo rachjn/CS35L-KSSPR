@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Text } from "@/components/Text";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -41,9 +40,9 @@ export default function Login() {
         </button>
         <Link
           href="/"
-          className="bg-gray-600 py-1 px-4 border border-black text-white flex items-center justify-center"
+          className="bg-gray-600 text-white p-2"
         >
-          <Text className="text-lg">Back</Text>
+          Back
         </Link>
       </div>
     </div>
