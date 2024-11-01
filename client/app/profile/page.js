@@ -1,9 +1,19 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
 import { LuUser, LuSearch } from "react-icons/lu";
 
 export default function Profile() {
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    setUsername(localStorage.getItem("username") || "Guest");
+  }, []);
+
   return (
     <PageShell title="Profile">
       <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto">
@@ -13,7 +23,7 @@ export default function Profile() {
             <LuUser className="w-8 h-8" />
           </div>
           <div className="flex flex-col">
-            <Text className="text-xl">Username</Text>
+            <Text className="text-xl">{username}</Text>
             <Text className="text-sm text-gray-600">
               Last login: {new Date().toLocaleDateString()}
             </Text>
