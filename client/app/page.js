@@ -30,9 +30,9 @@ export default function Home() {
       </div>
 
       <div className="mt-4 flex">
-        <button className="bg-gray-600 py-1 px-8 border-black">
+        <Link href="/login" className="bg-gray-600 py-1 px-8 border-black">
           <Text className="text-xl">sign in</Text>
-        </button>
+        </Link>
         <button className="ml-auto bg-gray-600 py-1 px-8 border-black">
           <Text className="text-xl">about</Text>
         </button>
