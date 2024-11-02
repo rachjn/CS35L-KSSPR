@@ -29,6 +29,14 @@ export default function Region() {
         <LuUser className="w-8 h-8 text-white" />
       </Link>
 
+      {/* Back Button */}
+      <Link
+        href="/"
+        className="fixed top-4 left-4 w-16 h-16 border border-black bg-gray-600 flex items-center justify-center hover:bg-gray-700 transition-colors"
+      >
+        <Text className="text-xl text-white">Back</Text>
+      </Link>
+
       {/* Region Grid */}
       <div className="grid grid-cols-3">
         <RegionSquare name="North America" color="blue" />
