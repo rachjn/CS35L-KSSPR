@@ -45,9 +45,9 @@ export default function Region() {
         <RegionSquare name="Africa" color="yellow" />
         <RegionSquare name="Asia" color="purple" />
         <RegionSquare name="Oceania" color="cyan" />
-        <RegionSquare name="Antarctica" color="white" />
-        <RegionSquare name="Mars" color="orange" />
-        <RegionSquare name="Jupiter" color="brown" />
+        <RegionSquare name="Caribbean" color="white" />
+        <RegionSquare name="Middle East" color="orange" />
+        <RegionSquare name="Central America" color="brown" />
       </div>
     </PageShell>
   );
