@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation"; 
 import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
@@ -9,10 +10,18 @@ import { LuUser, LuSearch } from "react-icons/lu";
 export default function Profile() {
 
   const [username, setUsername] = useState("");
+  const router = useRouter(); // Initialize useRouter here
+  
 
   useEffect(() => {
     setUsername(localStorage.getItem("username") || "Guest");
   }, []);
+
+  // Define handleLogout function
+  const handleLogout = () => {
+    localStorage.removeItem("username"); // Clear the username (or use your auth token key)
+    router.push("/login"); // Redirect to login page
+  };
 
   return (
     <PageShell title="Profile">
@@ -29,6 +38,14 @@ export default function Profile() {
             </Text>
           </div>
         </div>
+
+          {/* Logout Button */}
+        <button 
+          onClick={handleLogout}
+          className="self-end bg-red-500 text-white py-1 px-4 rounded"
+        >
+          Logout
+        </button>
 
         {/* History Section */}
         <div className="border border-black p-4">
@@ -66,5 +83,14 @@ export default function Profile() {
         </Link>
       </div>
     </PageShell>
+
+        
   );
 }
+
+
+
+
+
+
+
