@@ -5,6 +5,7 @@
     "client",
     "server"
   ],
+  "type": "module",
   "scripts": {
     "format": "prettier --write .",
     "dev": "concurrently \"npm -w client run dev\" \"npm -w server run dev\"",
@@ -15,5 +16,10 @@
     "concurrently": "^9.0.1",
     "prettier": "^3.3.3"
   },
-  "prettier": {}
+  "prettier": {},
+  "dependencies": {
+    "cors": "^2.8.5",
+    "sequelize": "^6.37.5",
+    "sqlite3": "^5.1.7"
+  }
 }
