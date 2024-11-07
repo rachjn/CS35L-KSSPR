@@ -1,23 +1,35 @@
 import express from "express";
 import bodyParser from "body-parser";
 import users from "./api/users.js";
+import scores from "./api/scores.js";
 import cors from "cors";
+import { sequelize } from "./database.js";
 
 const app = express();
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.use("/api", users);
+app.use("/api/users", users);
+app.use("/api/scores", scores);
 
 app.get("/bye", (req, res) => {
   res.send("Bye!");
 });
 
-app.listen(3001, () => {
-  console.log(`server listening at http://localhost:3001`);
+async function main() {
+  await sequelize.sync();
+  console.log("Database connected!");
+
+  app.listen(3001, () => {
+    console.log(`API server listening at http://localhost:3001`);
+  });
+}
+
+main().catch((err) => {
+  console.error("Error running server:", err);
 });
