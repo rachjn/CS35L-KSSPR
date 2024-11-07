@@ -41,6 +41,10 @@ const Score = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    challengeId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     value: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -52,9 +56,43 @@ const Score = sequelize.define(
   },
 );
 
+const Challenge = sequelize.define(
+  "Challenge",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    region: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    audioURL: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    transcript: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "challenges",
+    timestamps: false,
+  },
+);
+
+// score has many-to-one relationship with user and challenge
 User.hasMany(Score, { foreignKey: "userId" });
 Score.belongsTo(User, {
   foreignKey: "userId",
 });
+Challenge.hasMany(Score, { foreignKey: "challengeId" });
+Score.belongsTo(Challenge, { foreignKey: "challengeId" });
 
-export { sequelize, User, Score };
+export { sequelize, User, Score, Challenge };

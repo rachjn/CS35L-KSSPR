@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node --watch index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "seed:challenges": "node scripts/seed-challenges.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
