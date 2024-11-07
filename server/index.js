@@ -2,6 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import users from "./api/users.js";
 import scores from "./api/scores.js";
+import challenges from "./api/challenges.js";
 import cors from "cors";
 import { sequelize } from "./database.js";
 
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/users", users);
 app.use("/api/scores", scores);
+app.use("/api/challenges", challenges);
 
 app.get("/bye", (req, res) => {
   res.send("Bye!");

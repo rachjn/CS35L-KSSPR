@@ -1,18 +1,25 @@
 "use client";
 
 import { Text } from "@/components/Text";
-import { getFileURL } from "@/lib/media";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-
-const regionToAudio = {
-  africa: "nigeria_2.opus",
-  "north-america": "veracruz_1.opus",
-};
+import { useEffect, useState } from "react";
 
 export default function GameInterface() {
   const searchParams = useSearchParams();
   const region = searchParams.get("region");
+
+  const [challenge, setChallenge] = useState(null);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/api/challenges/region?region=" + region)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        const challengeIndex = Math.floor(Math.random() * data.length);
+        setChallenge(data[challengeIndex]);
+      });
+  }, [region]);
 
   // Convert URL parameter back to display format
   const displayRegion = region
@@ -25,11 +32,11 @@ export default function GameInterface() {
       {/* Region Title */}
       <div className="border border-black p-4 bg-white">
         <Text className="text-2xl">
-          {displayRegion}: {displayRegion} Accent
+          {displayRegion}: {challenge && challenge.title}
         </Text>
       </div>
 
-      <audio controls src={getFileURL(regionToAudio[region])} />
+      {challenge && <audio controls src={challenge.audioURL} />}
 
       {/* Score Block */}
       <div className="border border-black p-4 bg-white">
@@ -40,7 +47,7 @@ export default function GameInterface() {
       <div className="flex flex-col gap-4">
         {/* Area where words show up if we are doing it */}
         <div className="min-h-20 border border-black p-4 bg-gray-100">
-          <Text className="text-lg"> words show up here maybe...</Text>
+          {challenge && <Text className="text-lg">{challenge.transcript}</Text>}
         </div>
 
         {/* User input field */}
