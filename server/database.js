@@ -1,9 +1,22 @@
 import { Sequelize, DataTypes } from "sequelize";
 
+import path from "path";
+
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
 const sequelize = new Sequelize({
   dialect: "sqlite",
-  storage: "./database.sqlite",
+  storage: path.resolve(__dirname, "../server/database.sqlite"),
 });
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("Connection successful.");
+  })
+  .catch((err) => {
+    console.log("Error connecting.");
+  });
 
 const User = sequelize.define(
   "User",
@@ -13,7 +26,7 @@ const User = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
-    username: {
+    email: {
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
