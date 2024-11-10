@@ -3,121 +3,97 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { reg } from "@/app/api/actions/register";
 
 export default function SignUp() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
+  const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const router = useRouter();
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      pword: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    setError("");
+    setSuccess("");
+    startTransition(() => {
+      reg(data).then((result) => {
+        setError(result.error);
+        setSuccess(result.success);
       });
-
-      if (response.ok) {
-        const user = await response.json();
-        // Save the user data to localStorage
-        localStorage.setItem("username", user.username);
-        router.push("/profile");
-      } else {
-        // Handle error
-        console.error('Failed to login');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const handleSignup = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        // Clear the input fields
-        setUsername("");
-        setPassword("");
-        // Switch to login view
-        setIsLogin(true);
-      } else {
-        // Handle error
-        console.error('Failed to sign up');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl mb-4">{isLogin ? "Login" : "Sign Up"}</h1>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl mb-4">Sign Up</h1>
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="mb-2 p-2 border"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="mb-2 p-2 border"
-      />
+        <input
+          type="text"
+          placeholder="Email"
+          disabled={isPending}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email format",
+            },
+          })}
+          className="mb-2 p-2 border"
+        />
+        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
-      <div className="flex space-x-4">
-        <button
-          onClick={isLogin ? handleLogin : handleSignup}
-          className="bg-blue-500 text-white p-2"
-        >
-          {isLogin ? "Sign In" : "Sign Up"}
-        </button>
-        <Link
-          href="/"
-          className="bg-gray-600 text-white p-2"
-        >
-          Back
-        </Link>
-      </div>
+        <input
+          type="password"
+          placeholder="Password"
+          disabled={isPending}
+          {...register("pword", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters",
+            },
+          })}
+          className="mb-2 p-2 border"
+        />
+        {errors.pword && <p className="text-red-500">{errors.pword.message}</p>}
 
-      <div className="mt-4">
-        {isLogin ? (
-          <>
-            <span>Don’t have an account? </span>
-            <a
-              href="#"
-              onClick={() => setIsLogin(false)}
-              className="text-blue-500"
-            >
-              Sign Up
-            </a>
-          </>
-        ) : (
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+
+        <div className="flex space-x-4">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="bg-blue-500 text-white p-2"
+          >
+            Sign Up
+          </button>
+          <Link href="/" className="bg-gray-600 text-white p-2">
+            Back
+          </Link>
+        </div>
+        <div className="mt-4">
           <>
             <span>Already have an account? </span>
-            <a
-              href="#"
-              onClick={() => setIsLogin(true)}
-              className="text-blue-500"
-            >
+            <Link href="/login" className="text-blue-500">
               Login
-            </a>
+            </Link>
           </>
-        )}
+        </div>
       </div>
-    </div>
+    </form>
   );
 }

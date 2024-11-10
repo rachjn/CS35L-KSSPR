@@ -1,123 +1,112 @@
 "use client";
 
+import * as z from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { login } from "@/app/api/actions/login";
+import { useTransition } from "react";
+// import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [isPending, startTransition] = useTransition();
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
   const router = useRouter();
 
-  const handleLogin = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
+  // const handleLogin = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3001/api/users/login", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ username, password }),
+  //     });
+
+  //     if (response.ok) {
+  //       const user = await response.json();
+  //       // Save the user data to localStorage
+  //       localStorage.setItem("username", user.username);
+  //       router.push("/profile");
+  //     } else {
+  //       // Handle error
+  //       console.error("Failed to login");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error:", error);
+  //   }
+  // };
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: "",
+      pword: "",
+    },
+  });
+
+  const onSubmit = (data) => {
+    setError("");
+    setSuccess("");
+    startTransition(() => {
+      login(data).then((data) => {
+        setError(data.error);
+        setSuccess(data.success);
       });
-
-      if (response.ok) {
-        const user = await response.json();
-        // Save the user data to localStorage
-        localStorage.setItem("username", user.username);
-        router.push("/profile");
-      } else {
-        // Handle error
-        console.error('Failed to login');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-
-  const handleSignup = async () => {
-    try {
-      const response = await fetch('http://localhost:3001/api/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ username, password }),
-      });
-
-      if (response.ok) {
-        // Clear the input fields
-        setUsername("");
-        setPassword("");
-        // Switch to login view
-        setIsLogin(true);
-      } else {
-        // Handle error
-        console.error('Failed to sign up');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+    });
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-2xl mb-4">{isLogin ? "Login" : "Sign Up"}</h1>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-2xl mb-4">Login</h1>
+        <input
+          type="text"
+          placeholder="Email"
+          disabled={isPending}
+          {...register("email")}
+          className="mb-2 p-2 border"
+        />
+        <input
+          type="password"
+          placeholder="Password"
+          disabled={isPending}
+          {...register("pword")}
+          className="mb-2 p-2 border"
+        />
+        {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
 
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="mb-2 p-2 border"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="mb-2 p-2 border"
-      />
+        <div className="flex space-x-4">
+          <button
+            type="submit"
+            disabled={isPending}
+            className="bg-blue-500 text-white p-2"
+          >
+            Sign In
+          </button>
+          <Link href="/" className="bg-gray-600 text-white p-2">
+            Back
+          </Link>
+        </div>
 
-      <div className="flex space-x-4">
-        <button
-          onClick={isLogin ? handleLogin : handleSignup}
-          className="bg-blue-500 text-white p-2"
-        >
-          {isLogin ? "Sign In" : "Sign Up"}
-        </button>
-        <Link
-          href="/"
-          className="bg-gray-600 text-white p-2"
-        >
-          Back
-        </Link>
-      </div>
-
-      <div className="mt-4">
-        {isLogin ? (
+        <div className="mt-4">
           <>
             <span>Don’t have an account? </span>
-            <a
-              href="/signup"
-              onClick={() => setIsLogin(false)}
-              className="text-blue-500"
-            >
+            <Link href="/signup" className="text-blue-500">
               Sign Up
-            </a>
+            </Link>
           </>
-        ) : (
-          <>
-            <span>Already have an account? </span>
-            <a
-              href="#"
-              onClick={() => setIsLogin(true)}
-              className="text-blue-500"
-            >
-              Login
-            </a>
-          </>
-        )}
+        </div>
       </div>
-    </div>
+    </form>
   );
 }
