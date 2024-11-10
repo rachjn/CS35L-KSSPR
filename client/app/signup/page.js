@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
-export default function Login() {
+export default function SignUp() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
@@ -98,7 +98,7 @@ export default function Login() {
           <>
             <span>Don’t have an account? </span>
             <a
-              href="/signup"
+              href="#"
               onClick={() => setIsLogin(false)}
               className="text-blue-500"
             >
