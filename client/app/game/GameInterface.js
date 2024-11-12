@@ -3,7 +3,10 @@
 import { Text } from "@/components/Text";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
+
+// in seconds
+const TIMER_DURATION = 5;
 
 function getErrorOutput(transcript, input) {
   const transcriptWords = transcript.split(" ");
@@ -26,7 +29,7 @@ export default function GameInterface() {
   const [input, setInput] = useState("");
   const [challenge, setChallenge] = useState(null);
   const [errorOutput, setErrorOutput] = useState([]);
-  const [timerSeconds, setTimerSeconds] = useState(60);
+  const [timerSeconds, setTimerSeconds] = useState(TIMER_DURATION);
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
@@ -50,6 +53,22 @@ export default function GameInterface() {
     return () => clearInterval(timerInterval);
   }, []);
 
+  useEffect(() => {
+    if (isGameOver) {
+      fetch("http://localhost:3001/api/scores/record", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          challengeId: challenge.id,
+          input,
+          timeLeft: timerSeconds,
+        }),
+      });
+    }
+  }, [isGameOver]);
+
   // Convert URL parameter back to display format
   const displayRegion = region
     ?.split("-")
@@ -68,9 +87,11 @@ export default function GameInterface() {
       {challenge && <audio controls src={challenge.audioURL} />}
 
       {/* Score Block */}
-      <div className="border border-black p-4 bg-white">
-        <Text className="text-xl">Score: 0</Text>
-      </div>
+      {isGameOver && (
+        <div className="border border-black p-4 bg-white">
+          <Text className="text-xl">Score: 0</Text>
+        </div>
+      )}
 
       {/* Timer Block */}
       <div className="border border-black p-4 bg-white">
@@ -99,11 +120,14 @@ export default function GameInterface() {
           type="text"
           placeholder="Type words here..."
           value={input}
+          disabled={isGameOver}
           onChange={(e) => {
-            setInput(e.target.value);
-            setErrorOutput(
-              getErrorOutput(challenge.transcript, e.target.value),
-            );
+            startTransition(() => {
+              setInput(e.target.value);
+              setErrorOutput(
+                getErrorOutput(challenge.transcript, e.target.value),
+              );
+            });
           }}
           className="w-full p-4 border border-black text-lg focus:outline-none"
         />
