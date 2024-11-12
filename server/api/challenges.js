@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { Challenge, Score } from "../database.js";
+import { Sequelize } from "sequelize";
 
 const router = Router();
 
@@ -30,6 +31,22 @@ router.get("/region", async (req, res) => {
       },
     });
     res.status(200).json(challenges);
+  } catch (error) {
+    console.error("Error fetching challenges:", error);
+    res.status(500).json({ error: "Error fetching challenges" });
+  }
+});
+
+router.get("/region/random", async (req, res) => {
+  try {
+    // use ORDER BY RANDOM
+    const challenge = await Challenge.findOne({
+      where: {
+        region: req.query.region,
+      },
+      order: Sequelize.literal("RANDOM()"),
+    });
+    res.status(200).json(challenge);
   } catch (error) {
     console.error("Error fetching challenges:", error);
     res.status(500).json({ error: "Error fetching challenges" });

@@ -12,11 +12,9 @@ function getErrorOutput(transcript, input) {
   const output = [];
 
   for (let i = 0; i < inputWords.length - 1; i++) {
-    if (inputWords[i] !== transcriptWords[i]) {
+    if (inputWords[i].toLowerCase() !== transcriptWords[i].toLowerCase())
       output.push({ word: inputWords[i], error: true });
-    } else {
-      output.push({ word: inputWords[i], error: false });
-    }
+    else output.push({ word: inputWords[i], error: false });
   }
 
   return output;
@@ -28,16 +26,29 @@ export default function GameInterface() {
   const [input, setInput] = useState("");
   const [challenge, setChallenge] = useState(null);
   const [errorOutput, setErrorOutput] = useState([]);
+  const [timerSeconds, setTimerSeconds] = useState(60);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/challenges/region?region=" + region)
+    fetch("http://localhost:3001/api/challenges/region/random?region=" + region)
       .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        const challengeIndex = Math.floor(Math.random() * data.length);
-        setChallenge(data[challengeIndex]);
-      });
+      .then((data) => setChallenge(data));
   }, [region]);
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      setTimerSeconds((seconds) => {
+        const newSeconds = seconds - 1;
+        if (newSeconds === 0) {
+          clearInterval(timerInterval);
+          setIsGameOver(true);
+        }
+        return newSeconds;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerInterval);
+  }, []);
 
   // Convert URL parameter back to display format
   const displayRegion = region
@@ -59,6 +70,11 @@ export default function GameInterface() {
       {/* Score Block */}
       <div className="border border-black p-4 bg-white">
         <Text className="text-xl">Score: 0</Text>
+      </div>
+
+      {/* Timer Block */}
+      <div className="border border-black p-4 bg-white">
+        <Text className="text-xl">{timerSeconds} seconds left</Text>
       </div>
 
       {/* Text Input Area */}
