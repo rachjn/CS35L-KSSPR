@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "node --watch index.js",
     "start": "node index.js",
-    "seed:challenges": "node scripts/seed-challenges.js"
+    "seed:challenges": "node scripts/seed-challenges.js",
+    "seed:test-user": "node scripts/seed-test-user.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
