@@ -9,6 +9,7 @@
     "seed:test-user": "node scripts/seed-test-user.js"
   },
   "dependencies": {
+    "@auth/sequelize-adapter": "^2.7.3",
     "cors": "^2.8.5",
     "express": "^4.21.1",
     "sequelize": "^6.37.5",

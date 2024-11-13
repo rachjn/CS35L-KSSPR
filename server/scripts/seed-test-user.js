@@ -1,8 +1,10 @@
-import { sequelize, User } from "../database.js";
+import { nextAuthAdapter } from "../auth.js";
+import { sequelize } from "../database.js";
 
 await sequelize.sync();
 
-await User.create({
+await nextAuthAdapter.createUser({
+  id: "1",
   email: "test@test.com",
-  password: "xyz",
+  emailVerified: new Date(),
 });

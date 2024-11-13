@@ -5,11 +5,23 @@ import scores from "./api/scores.js";
 import challenges from "./api/challenges.js";
 import cors from "cors";
 import { sequelize } from "./database.js";
+import { ExpressAuth } from "@auth/express";
+import { sequelize } from "./database.js";
+import { nextAuthAdapter } from "./auth.js";
 
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.set("trust proxy", true);
+app.use(
+  "/auth/*",
+  ExpressAuth({
+    providers: [],
+    adapter: nextAuthAdapter,
+  }),
+);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
