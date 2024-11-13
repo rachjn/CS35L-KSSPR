@@ -1,12 +1,14 @@
 "use client";
 
 import { Text } from "@/components/Text";
+import { getRandomChallengeByRegion } from "@/lib/actions/get-challenge";
+import { recordScore } from "@/lib/actions/get-scores";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 
 // in seconds
-const TIMER_DURATION = 5;
+const TIMER_DURATION = 60;
 
 function getErrorOutput(transcript, input) {
   const transcriptWords = transcript.split(" ");
@@ -33,9 +35,11 @@ export default function GameInterface() {
   const [isGameOver, setIsGameOver] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/challenges/region/random?region=" + region)
-      .then((res) => res.json())
-      .then((data) => setChallenge(data));
+    async function setRandomChallenge() {
+      const challenge = await getRandomChallengeByRegion(region);
+      setChallenge(challenge);
+    }
+    setRandomChallenge();
   }, [region]);
 
   useEffect(() => {
@@ -55,17 +59,8 @@ export default function GameInterface() {
 
   useEffect(() => {
     if (isGameOver) {
-      fetch("http://localhost:3001/api/scores/record", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          challengeId: challenge.id,
-          input,
-          timeLeft: timerSeconds,
-        }),
-      });
+      console.log(challenge);
+      recordScore(challenge.id, input, timerSeconds);
     }
   }, [isGameOver]);
 
