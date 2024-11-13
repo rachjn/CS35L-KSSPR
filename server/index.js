@@ -4,10 +4,10 @@ import users from "./api/users.js";
 import scores from "./api/scores.js";
 import challenges from "./api/challenges.js";
 import cors from "cors";
-import { sequelize } from "./database.js";
 import { ExpressAuth } from "@auth/express";
-import { sequelize } from "./database.js";
+import { sequelize, User } from "./database.js";
 import { nextAuthAdapter } from "./auth.js";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 const app = express();
 
@@ -18,7 +18,23 @@ app.set("trust proxy", true);
 app.use(
   "/auth/*",
   ExpressAuth({
-    providers: [],
+    providers: [
+      CredentialsProvider.default({
+        name: "Credentials",
+        credentials: {
+          email: { label: "Email", type: "text" },
+          password: { label: "Password", type: "password" },
+        },
+        async authorize(credentials, req) {
+          const user = await User.findOne({
+            email: credentials.email,
+            password: credentials.password,
+          });
+
+          return user ? user : null;
+        },
+      }),
+    ],
     adapter: nextAuthAdapter,
   }),
 );

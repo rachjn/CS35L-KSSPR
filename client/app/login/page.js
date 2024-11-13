@@ -1,52 +1,17 @@
 "use client";
-
-import * as z from "zod";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { login } from "@/app/api/actions/login";
 import { useTransition } from "react";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 
 export default function Login() {
   const [isPending, startTransition] = useTransition();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
-  const router = useRouter();
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3001/api/users/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-
-  //     if (response.ok) {
-  //       const user = await response.json();
-  //       // Save the user data to localStorage
-  //       localStorage.setItem("username", user.username);
-  //       router.push("/profile");
-  //     } else {
-  //       // Handle error
-  //       console.error("Failed to login");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       pword: "",
@@ -57,10 +22,16 @@ export default function Login() {
     setError("");
     setSuccess("");
     startTransition(() => {
-      login(data).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
+      signIn("credentials", {
+        redirect: false,
+        callbackUrl: "/",
+        username: data.email,
+        password: data.pword,
       });
+      // login(data).then((data) => {
+      //   setError(data.error);
+      //   setSuccess(data.success);
+      // });
     });
   };
 
