@@ -1,4 +1,4 @@
-import { sequelize, User } from "../database.js";
+import { sequelize, User } from "../lib/database.mjs";
 
 await sequelize.sync();
 
