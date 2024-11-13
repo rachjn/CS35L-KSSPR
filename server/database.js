@@ -1,6 +1,6 @@
 import { Sequelize, DataTypes } from "sequelize";
+
 import path from "path";
-import { models } from "@auth/sequelize-adapter";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
@@ -17,6 +17,30 @@ sequelize
   .catch((err) => {
     console.log("Error connecting.");
   });
+
+const User = sequelize.define(
+  "User",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "users",
+    timestamps: false,
+  },
+);
 
 const Score = sequelize.define(
   "Score",
@@ -76,14 +100,6 @@ const Challenge = sequelize.define(
   },
 );
 
-const Account = sequelize.define("Account", models.Account);
-const Session = sequelize.define("Session", models.Session);
-const User = sequelize.define("User", models.User);
-const VerificationToken = sequelize.define(
-  "VerificationToken",
-  models.VerificationToken,
-);
-
 // score has many-to-one relationship with user and challenge
 User.hasMany(Score, { foreignKey: "userId" });
 Score.belongsTo(User, {
@@ -92,12 +108,4 @@ Score.belongsTo(User, {
 Challenge.hasMany(Score, { foreignKey: "challengeId" });
 Score.belongsTo(Challenge, { foreignKey: "challengeId" });
 
-export {
-  sequelize,
-  User,
-  Account,
-  Session,
-  VerificationToken,
-  Score,
-  Challenge,
-};
+export { sequelize, User, Score, Challenge };
