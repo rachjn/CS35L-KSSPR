@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTransition } from "react";
 import { useForm } from "react-hook-form";
-import { reg } from "@/app/api/actions/register";
+import { reg } from "@/lib/actions/register";
 
 export default function SignUp() {
   const [isPending, startTransition] = useTransition();

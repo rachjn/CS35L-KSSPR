@@ -1,13 +1,11 @@
 "use client";
 
-import * as z from "zod";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { login } from "@/app/api/actions/login";
+import { login } from "@/lib/actions/login";
 import { useTransition } from "react";
-// import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function Login() {
   const [isPending, startTransition] = useTransition();
