@@ -103,7 +103,7 @@ export default function GameInterface() {
                 {word}{" "}
               </span>
             ) : (
-              <span key={index} className="text-lg">
+              <span key={index} className="text-lg text-green-500">
                 {word}{" "}
               </span>
             ),

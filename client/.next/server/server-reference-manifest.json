@@ -1,0 +1,28 @@
+{
+  "node": {
+    "34665b2d8e5e58d9297c9ccd185e93bd9e778091": {
+      "workers": {
+        "app/login/page": {
+          "moduleId": "(action-browser)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fpatricklu%2FDesktop%2FCS35L-KSSPR%2Fclient%2Fapp%2Fapi%2Factions%2Flogin.js%22%2C%5B%22login%22%5D%5D%5D&encryptionKey=UcK7pq6kpQnfIvU9c9QI078J%2Fm39e%2FguwGw502bBRsw%3D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/login/page": "action-browser"
+      }
+    },
+    "1cffebc909d649d90998d7ae4bb1ce4d90115871": {
+      "workers": {
+        "app/signup/page": {
+          "moduleId": "(action-browser)/../node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2FUsers%2Fpatricklu%2FDesktop%2FCS35L-KSSPR%2Fclient%2Fapp%2Fapi%2Factions%2Fregister.js%22%2C%5B%22reg%22%5D%5D%5D&encryptionKey=UcK7pq6kpQnfIvU9c9QI078J%2Fm39e%2FguwGw502bBRsw%3D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/signup/page": "action-browser"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "UcK7pq6kpQnfIvU9c9QI078J/m39e/guwGw502bBRsw="
+}
