@@ -33,7 +33,10 @@ export default function Home() {
         <Link href="/login" className="bg-gray-600 py-1 px-8 border-black">
           <Text className="text-xl">sign in</Text>
         </Link>
-        <Link href="/about" className="ml-auto bg-gray-600 py-1 px-8 border-black">
+        <Link
+          href="/about"
+          className="ml-auto bg-gray-600 py-1 px-8 border-black"
+        >
           <Text className="text-xl">about</Text>
         </Link>
       </div>
