@@ -10,9 +10,12 @@ import { startTransition, useEffect, useState } from "react";
 // in seconds
 const TIMER_DURATION = 60;
 
+// Utlity function to remove punctuation (don't want to penalize user for not putting a comma/period)
+const removePunctuation = (word) => word.replace(/[^\w\s]|_/g, "");
+
 function getErrorOutput(transcript, input) {
-  const transcriptWords = transcript.split(" ");
-  const inputWords = input.split(" ");
+  const transcriptWords = transcript.split(" ").map(removePunctuation);
+  const inputWords = input.split(" ").map(removePunctuation);
 
   const output = [];
 
@@ -103,7 +106,7 @@ export default function GameInterface() {
                 {word}{" "}
               </span>
             ) : (
-              <span key={index} className="text-lg">
+              <span key={index} className="text-lg text-green-500">
                 {word}{" "}
               </span>
             ),
