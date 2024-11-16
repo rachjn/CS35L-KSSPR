@@ -10,9 +10,15 @@ import { startTransition, useEffect, useState } from "react";
 // in seconds
 const TIMER_DURATION = 60;
 
+// Utlity function to remove punctuation (don't want to penalize user for not putting a comma/period)
+// Removes punctuation marks: .,!?:;'"
+// Removes special characters: @#$%^&*()[]{}<>/|\~
+// Removes underscores
+const removePunctuation = (word) => word.replace(/[^\w\s]|_/g, "");
+
 function getErrorOutput(transcript, input) {
-  const transcriptWords = transcript.split(" ");
-  const inputWords = input.split(" ");
+  const transcriptWords = transcript.split(" ").map(removePunctuation);
+  const inputWords = input.split(" ").map(removePunctuation);
 
   const output = [];
 
@@ -33,6 +39,7 @@ export default function GameInterface() {
   const [errorOutput, setErrorOutput] = useState([]);
   const [timerSeconds, setTimerSeconds] = useState(TIMER_DURATION);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [score, setScore] = useState(0); // State for the score
 
   useEffect(() => {
     async function setRandomChallenge() {
@@ -58,11 +65,13 @@ export default function GameInterface() {
   }, []);
 
   useEffect(() => {
-    if (isGameOver) {
+    if (isGameOver && challenge) {
       console.log(challenge);
-      recordScore(challenge.id, input, timerSeconds);
+      recordScore(challenge.id, input, timerSeconds).then((result) => {
+        setScore(result.value); // Dynamically update score state
+      });
     }
-  }, [isGameOver]);
+  }, [isGameOver, challenge, input, timerSeconds]);
 
   // Convert URL parameter back to display format
   const displayRegion = region
@@ -84,7 +93,7 @@ export default function GameInterface() {
       {/* Score Block */}
       {isGameOver && (
         <div className="border border-black p-4 bg-white">
-          <Text className="text-xl">Score: 0</Text>
+          <Text className="text-xl">Score: {score}</Text>
         </div>
       )}
 
@@ -103,7 +112,7 @@ export default function GameInterface() {
                 {word}{" "}
               </span>
             ) : (
-              <span key={index} className="text-lg">
+              <span key={index} className="text-lg text-green-500">
                 {word}{" "}
               </span>
             ),
