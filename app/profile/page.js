@@ -6,13 +6,23 @@ import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
 import { LuUser, LuSearch } from "react-icons/lu";
+import { getScoreByUser } from "@/lib/actions/get-scores";
 
 export default function Profile() {
   const [username, setUsername] = useState("");
+  const [scores, setScores] = useState([]);
   const router = useRouter(); // Initialize useRouter here
 
   useEffect(() => {
     setUsername(localStorage.getItem("username") || "Guest");
+
+    // Fetch user's scores
+    const userId = localStorage.getItem("userId"); //Placeholder until auth is finished
+    if (userId) {
+      getScoreByUser(userId).then((fetchedScores) => {
+        setScores(fetchedScores); // Store fetched scores in state
+      });
+    }
   }, []);
 
   // Define handleLogout function
