@@ -67,7 +67,8 @@ export default function GameInterface() {
   useEffect(() => {
     if (isGameOver && challenge) {
       console.log(challenge);
-      recordScore(challenge.id, input, timerSeconds).then((result) => {
+      const userId = localStorage.getItem("userId"); // Not sure how to get this YET
+      recordScore(userId, challenge.id, input, timerSeconds).then((result) => {
         setScore(result.value); // Dynamically update score state
       });
     }
