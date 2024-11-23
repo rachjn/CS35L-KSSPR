@@ -18,16 +18,22 @@ export default function Profile() {
 
     // Fetch user's scores
     const userId = localStorage.getItem("userId"); //Placeholder until auth is finished
+    /*
     if (userId) {
       getScoreByUser(userId).then((fetchedScores) => {
         setScores(fetchedScores); // Store fetched scores in state
       });
     }
+    */
+    getScoreByUser(1).then((fetchedScores) => { //Placeholder for now just to check if we can display scores
+      setScores(fetchedScores); // Store fetched scores in state
+    });
   }, []);
 
   // Define handleLogout function
   const handleLogout = () => {
     localStorage.removeItem("username"); // Clear the username (or use your auth token key)
+    localStorage.removeItem("userId"); // Placeholder until auth is finished
     router.push("/login"); // Redirect to login page
   };
 
@@ -67,18 +73,12 @@ export default function Profile() {
 
           {/* Sample history items; WIP */}
           <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center py-2 border-b border-gray-200">
-              <Text>Region: Score</Text>
-              <Text>Date</Text>
-            </div>
-            <div className="flex justify-between items-center py-2 border-b border-gray-200">
-              <Text>Region: Score</Text>
-              <Text>Date</Text>
-            </div>
-            <div className="flex justify-between items-center py-2 border-b border-gray-200">
-              <Text>Region: Score</Text>
-              <Text>Date</Text>
-            </div>
+            {scores.map((score) => (
+              <div key={score.id} className="flex justify-between items-center py-2 border-b border-gray-200">
+                <Text>{score.Challenge.region}: {score.value}</Text>
+                <Text>{score.createdAt ? new Date(score.createdAt).toLocaleDateString() : "N/A"}</Text>
+              </div>
+            ))}
           </div>
         </div>
 
