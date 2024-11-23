@@ -8,12 +8,13 @@ import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 
 // in seconds
-const TIMER_DURATION = 60;
+const TIMER_DURATION = 10;
 
 // Utlity function to remove punctuation (don't want to penalize user for not putting a comma/period)
 // Removes punctuation marks: .,!?:;'"
 // Removes special characters: @#$%^&*()[]{}<>/|\~
 // Removes underscores
+// WIP: Remove em dash (For the North American challenge, if you remove the -, it doesn't register)
 const removePunctuation = (word) => word.replace(/[^\w\s]|_/g, "");
 
 function getErrorOutput(transcript, input) {
@@ -66,8 +67,8 @@ export default function GameInterface() {
 
   useEffect(() => {
     if (isGameOver && challenge) {
-      console.log(challenge);
-      recordScore(challenge.id, input, timerSeconds).then((result) => {
+      // const userId = localStorage.getItem("userId"); // Placeholder until auth is finished
+      recordScore(1, challenge.id, input, timerSeconds).then((result) => { // Change hardcoded 1 back to userId
         setScore(result.value); // Dynamically update score state
       });
     }
