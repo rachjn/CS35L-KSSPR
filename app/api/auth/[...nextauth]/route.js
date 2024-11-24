@@ -5,6 +5,7 @@
 
 export { GET, POST } from "@/auth";
 
+
 // const handler = NextAuth({
 //   adapter: SequelizeAdapter(sequelize),
 //   providers: [
