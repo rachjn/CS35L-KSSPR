@@ -5,37 +5,43 @@ import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
-import { LuUser, LuSearch } from "react-icons/lu";
+import { LuUser } from "react-icons/lu";
 import { getScoreByUser } from "@/lib/actions/get-scores";
 
 export default function Profile() {
   const [username, setUsername] = useState("");
   const [scores, setScores] = useState([]);
-  const router = useRouter(); // Initialize useRouter here
+  const [bestScore, setBestScore] = useState(null);
+  const [bestWpm, setBestWpm] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     setUsername(localStorage.getItem("username") || "Guest");
 
     // Fetch user's scores
-    const userId = localStorage.getItem("userId"); //Placeholder until auth is finished
-    /*
-    if (userId) {
-      getScoreByUser(userId).then((fetchedScores) => {
-        setScores(fetchedScores); // Store fetched scores in state
-      });
-    }
-    */
-    getScoreByUser(1).then((fetchedScores) => { //Placeholder for now just to check if we can display scores
-      setScores(fetchedScores); // Store fetched scores in state
+    getScoreByUser(1).then((fetchedScores) => {
+      setScores(fetchedScores);
+
+      // Find best score and WPM
+      if (fetchedScores.length > 0) {
+        const maxScore = Math.max(...fetchedScores.map((score) => score.value));
+        const maxWpm = Math.max(...fetchedScores.map((score) => score.wpm));
+        setBestScore(maxScore);
+        setBestWpm(maxWpm);
+      }
     });
   }, []);
 
-  // Define handleLogout function
   const handleLogout = () => {
-    localStorage.removeItem("username"); // Clear the username (or use your auth token key)
-    localStorage.removeItem("userId"); // Placeholder until auth is finished
-    router.push("/login"); // Redirect to login page
+    localStorage.removeItem("username");
+    localStorage.removeItem("userId");
+    router.push("/login");
   };
+
+  const recentScores = scores
+    .slice()
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 3);
 
   return (
     <PageShell title="Profile">
@@ -61,22 +67,35 @@ export default function Profile() {
           Logout
         </button>
 
+        {/* Best Score and WPM Section */}
+        <div className="border border-black p-4">
+          <Text className="text-lg font-bold">All-Time Best</Text>
+          <div className="flex justify-between">
+            <Text>Best Score: {bestScore !== null ? bestScore : "N/A"}</Text>
+            <Text>Best WPM: {bestWpm !== null ? bestWpm : "N/A"}</Text>
+          </div>
+        </div>
+
         {/* History Section */}
         <div className="border border-black p-4">
           <div className="flex items-center justify-between mb-4">
-            <Text className="text-lg font-bold">History</Text>
-            <div className="flex items-center gap-2">
-              <LuSearch className="w-5 h-5" />
-              <Text>Search</Text>
-            </div>
+            <Text className="text-lg font-bold">Recent Attempts</Text>
           </div>
 
-          {/* Sample history items; WIP */}
           <div className="flex flex-col gap-2">
-            {scores.map((score) => (
-              <div key={score.id} className="flex justify-between items-center py-2 border-b border-gray-200">
-                <Text>{score.Challenge.region}: {score.value}</Text>
-                <Text>{score.createdAt ? new Date(score.createdAt).toLocaleDateString() : "N/A"}</Text>
+            {recentScores.map((score) => (
+              <div
+                key={score.id}
+                className="flex justify-between items-center py-2 border-b border-gray-200"
+              >
+                <Text>
+                  {score.Challenge.region}: {score.value} - {score.wpm} WPM
+                </Text>
+                <Text>
+                  {score.createdAt
+                    ? new Date(score.createdAt).toLocaleDateString()
+                    : "N/A"}
+                </Text>
               </div>
             ))}
           </div>
