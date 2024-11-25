@@ -20,7 +20,7 @@ export default function SignUp() {
   } = useForm({
     defaultValues: {
       email: "",
-      pword: "",
+      password: "",
     },
   });
 
@@ -59,7 +59,7 @@ export default function SignUp() {
           type="password"
           placeholder="Password"
           disabled={isPending}
-          {...register("pword", {
+          {...register("password", {
             required: "Password is required",
             minLength: {
               value: 8,
@@ -68,7 +68,9 @@ export default function SignUp() {
           })}
           className="mb-2 p-2 border"
         />
-        {errors.pword && <p className="text-red-500">{errors.pword.message}</p>}
+        {errors.password && (
+          <p className="text-red-500">{errors.password.message}</p>
+        )}
 
         {error && <p className="text-red-500">{error}</p>}
         {success && <p className="text-green-500">{success}</p>}
