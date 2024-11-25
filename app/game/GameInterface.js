@@ -41,6 +41,7 @@ export default function GameInterface() {
   const [timerSeconds, setTimerSeconds] = useState(TIMER_DURATION);
   const [isGameOver, setIsGameOver] = useState(false);
   const [score, setScore] = useState(0); // State for the score
+  const [wpm, setWpm] = useState(0); // State for the wpm
 
   useEffect(() => {
     async function setRandomChallenge() {
@@ -71,6 +72,7 @@ export default function GameInterface() {
       recordScore(1, challenge.id, input, timerSeconds).then((result) => {
         // Change hardcoded 1 back to userId
         setScore(result.score); // Dynamically update score state
+        setWpm(result.wpm); // Dynamically update wpm state
       });
     }
   }, [isGameOver, challenge, input, timerSeconds]);
@@ -95,7 +97,9 @@ export default function GameInterface() {
       {/* Score Block */}
       {isGameOver && (
         <div className="border border-black p-4 bg-white">
-          <Text className="text-xl">Score: {score}</Text>
+          <Text className="text-xl">
+            Score: {score} - {wpm} WPM
+          </Text>
         </div>
       )}
 
