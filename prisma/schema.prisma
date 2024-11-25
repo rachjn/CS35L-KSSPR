@@ -9,28 +9,35 @@ generator client {
 }
 
 model User {
-  id       Int     @id @default(autoincrement())
-  email    String  @unique
-  password String
-  scores   Score[]
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  scores    Score[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Score {
   id          Int       @id @default(autoincrement())
-  score       Int
+  score       Decimal
+  wpm         Decimal
   userId      Int
   user        User      @relation(fields: [userId], references: [id])
   challengeId Int
   challenge   Challenge @relation(fields: [challengeId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 }
 
 model Challenge {
-  id         Int     @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   title      String
   region     String
   audioURL   String
   transcript String
   scores     Score[]
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 datasource db {
