@@ -1,9 +1,8 @@
-import { sequelize } from "@/lib/database.mjs";
-import { User } from "@/lib/database.mjs";
+import prisma from "@/lib/database.js";
 
 export const getUserByEmail = async (email) => {
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await prisma.user.findUnique({ where: { email } });
     return user;
   } catch {
     return null;
@@ -12,7 +11,7 @@ export const getUserByEmail = async (email) => {
 
 export const getUserById = async (id) => {
   try {
-    const user = await User.findOne({ where: { id } });
+    const user = await prisma.user.findUnique({ where: { id } });
     return user;
   } catch {
     return null;

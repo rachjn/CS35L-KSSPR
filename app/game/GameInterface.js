@@ -68,8 +68,9 @@ export default function GameInterface() {
   useEffect(() => {
     if (isGameOver && challenge) {
       // const userId = localStorage.getItem("userId"); // Placeholder until auth is finished
-      recordScore(1, challenge.id, input, timerSeconds).then((result) => { // Change hardcoded 1 back to userId
-        setScore(result.value); // Dynamically update score state
+      recordScore(1, challenge.id, input, timerSeconds).then((result) => {
+        // Change hardcoded 1 back to userId
+        setScore(result.score); // Dynamically update score state
       });
     }
   }, [isGameOver, challenge, input, timerSeconds]);

@@ -24,7 +24,7 @@ export default function Profile() {
 
       // Find best score and WPM
       if (fetchedScores.length > 0) {
-        const maxScore = Math.max(...fetchedScores.map((score) => score.value));
+        const maxScore = Math.max(...fetchedScores.map((score) => score.score));
         const maxWpm = Math.max(...fetchedScores.map((score) => score.wpm));
         setBestScore(maxScore);
         setBestWpm(maxWpm);
@@ -89,7 +89,7 @@ export default function Profile() {
                 className="flex justify-between items-center py-2 border-b border-gray-200"
               >
                 <Text>
-                  {score.Challenge.region}: {score.value} - {score.wpm} WPM
+                  {score.challenge.region}: {score.score} - {score.wpm} WPM
                 </Text>
                 <Text>
                   {score.createdAt
