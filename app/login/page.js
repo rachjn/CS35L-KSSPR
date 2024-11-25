@@ -16,30 +16,6 @@ export default function Login() {
   const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
   const router = useRouter();
 
-  // const handleLogin = async () => {
-  //   try {
-  //     const response = await fetch("http://localhost:3001/api/users/login", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ username, password }),
-  //     });
-
-  //     if (response.ok) {
-  //       const user = await response.json();
-  //       // Save the user data to localStorage
-  //       localStorage.setItem("username", user.username);
-  //       router.push("/profile");
-  //     } else {
-  //       // Handle error
-  //       console.error("Failed to login");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error:", error);
-  //   }
-  // };
-
   const {
     register,
     handleSubmit,
@@ -47,7 +23,7 @@ export default function Login() {
   } = useForm({
     defaultValues: {
       email: "",
-      pword: "",
+      password: "",
     },
   });
 
@@ -77,7 +53,7 @@ export default function Login() {
           type="password"
           placeholder="Password"
           disabled={isPending}
-          {...register("pword")}
+          {...register("password")}
           className="mb-2 p-2 border"
         />
         {error && <p className="text-red-500">{error}</p>}

@@ -7,6 +7,7 @@ import { Text } from "@/components/Text";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
 import { getScoreByUser } from "@/lib/actions/get-scores";
+import { LogoutButton } from "@/components/LogoutButton";
 
 export default function Profile() {
   const [username, setUsername] = useState("");
@@ -32,11 +33,11 @@ export default function Profile() {
     });
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("userId");
-    router.push("/login");
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("username");
+  //   localStorage.removeItem("userId");
+  //   router.push("/login");
+  // };
 
   const recentScores = scores
     .slice()
@@ -59,14 +60,14 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* Logout Button */}
+        <LogoutButton>Log Out</LogoutButton>
+        {/* Logout Button
         <button
           onClick={handleLogout}
           className="self-end bg-red-500 text-white py-1 px-4 rounded"
         >
           Logout
-        </button>
-
+        </button> */}
         {/* Best Score and WPM Section */}
         <div className="border border-black p-4">
           <Text className="text-lg font-bold">All-Time Best</Text>
@@ -75,7 +76,6 @@ export default function Profile() {
             <Text>Best WPM: {bestWpm !== null ? bestWpm : "N/A"}</Text>
           </div>
         </div>
-
         {/* History Section */}
         <div className="border border-black p-4">
           <div className="flex items-center justify-between mb-4">
@@ -100,7 +100,6 @@ export default function Profile() {
             ))}
           </div>
         </div>
-
         {/* Back Button */}
         <Link
           href="/region"
