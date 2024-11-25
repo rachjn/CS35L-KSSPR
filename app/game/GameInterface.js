@@ -96,10 +96,19 @@ export default function GameInterface() {
 
       {/* Score Block */}
       {isGameOver && (
-        <div className="border border-black p-4 bg-white">
-          <Text className="text-xl">
-            Score: {score} - {wpm} WPM
-          </Text>
+        <div className="border border-black p-4 mt-4">
+          <Text className="text-lg font-bold">Game Over</Text>
+          <div className="flex justify-between">
+            <Text>
+              Score: {score} - {wpm} WPM
+            </Text>
+          </div>
+          {/* Button to navigate to Scoreboard */}
+          <Link href="/scoreboard">
+            <button className="mt-4 bg-blue-500 text-white py-2 px-4 rounded">
+              View Scoreboard
+            </button>
+          </Link>
         </div>
       )}
 
