@@ -1,69 +1,50 @@
+import { HomeButton } from "@/components/HomeButton";
 import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
+import classNames from "classnames";
 
-function RegionSquare({ name, color }) {
+function RegionSquare({ name, bgColor }) {
   // Convert the region name to a URL-friendly format
   const regionParam = name.toLowerCase().replace(/\s+/g, "-");
 
   return (
     <Link
       href={`/game?region=${regionParam}`}
-      className="flex items-center justify-center border border-black h-24 hover:opacity-80 transition-opacity"
-      style={{ backgroundColor: color }}
+      className={`${bgColor} border border-white border-opacity-30 text-lg shadow-md flex items-center text-dark-brown lowercase px-4 justify-center rounded-lg py-14 hover:scale-[105%] transform transition-transform duration-200`}
     >
-      <Text>{name}</Text>
+      <div>{name}</div>
     </Link>
   );
 }
 
 export default function Region() {
   return (
-    <PageShell title="pick a region">
-      {/* Profile and Leaderboard Buttons */}
-  <div className="fixed top-4 right-4 flex items-center gap-2">
-    {/* Leaderboard Button */}
-    <Link
-      href="/leaderboard"
-      className="w-16 h-16 border border-black bg-yellow-500 flex items-center justify-center hover:bg-yellow-600 transition-colors rounded"
-    >
-      👑
-    </Link>
-
-    {/* Profile Button */}
-    <Link
-      href="/profile"
-      className="w-16 h-16 border border-black bg-gray-600 flex items-center justify-center hover:bg-gray-700 transition-colors rounded"
-    >
-      <LuUser className="w-8 h-8 text-white" />
-    </Link>
-  </div>
-
-
-      {/* Back Button */}
-      <Link
-        href="/"
-        className="fixed top-4 left-4 w-16 h-16 border border-black bg-gray-600 flex items-center justify-center hover:bg-gray-700 transition-colors"
-      >
-        <Text className="text-xl text-white">Back</Text>
+    <>
+      <HomeButton />
+      {/* Profile Link Square */}
+      <Link href="/profile" className="absolute right-12 top-8 p-2">
+        <LuUser className="w-12 h-12 text-dark-brown" />
       </Link>
 
-
-      
-
-      {/* Region Grid */}
-      <div className="grid grid-cols-3">
-        <RegionSquare name="North America" color="blue" />
-        <RegionSquare name="South America" color="green" />
-        <RegionSquare name="Europe" color="red" />
-        <RegionSquare name="Africa" color="yellow" />
-        <RegionSquare name="Asia" color="purple" />
-        <RegionSquare name="Oceania" color="cyan" />
-        <RegionSquare name="Caribbean" color="white" />
-        <RegionSquare name="Middle East" color="orange" />
-        <RegionSquare name="Central America" color="brown" />
+      <div className="flex justify-center items-center h-screen flex-col">
+        <div className="mb-8 text-5xl font-bold text-dark-brown ">
+          choose a region
+        </div>
+        {/* Region Grid */}
+        <div className="grid grid-cols-3 justify-center gap-3">
+          <RegionSquare name="North America" bgColor={"bg-sq1"} />
+          <RegionSquare name="South America" bgColor={"bg-sq2"} />
+          <RegionSquare name="Europe" bgColor={"bg-sq3"} />
+          <RegionSquare name="Africa" bgColor={"bg-sq2"} />
+          <RegionSquare name="Asia" bgColor={"bg-sq3"} />
+          <RegionSquare name="Oceania" bgColor={"bg-sq4"} />
+          <RegionSquare name="Caribbean" bgColor={"bg-sq3"} />
+          <RegionSquare name="Middle East" bgColor={"bg-sq4"} />
+          <RegionSquare name="Central America" bgColor={"bg-sq5"} />
+        </div>
       </div>
-    </PageShell>
+    </>
   );
 }
