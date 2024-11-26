@@ -18,6 +18,8 @@ module.exports = {
         "dark-brown": "#47302B",
         "light-brown": "#B4A09C",
         "lighter-brown": "#D7C5C1",
+        "my-blue": "#82C7E9",
+        "my-pink": "#FDAAAA",
       },
     },
   },
