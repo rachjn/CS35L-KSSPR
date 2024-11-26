@@ -51,22 +51,26 @@ export default async function Profile() {
   return (
     <>
       <HomeButton />
-      <div className="py-20">
-        <div className="flex flex-col gap-6 w-full max-w-2xl mx-auto">
+      <div className="flex justify-start p-20 h-screen items-center text-dark-brown">
+        <div className="flex flex-col gap-4 w-full max-w-2xl rounded-lg p-12 py-10 border border-white border-opacity-40 shadow-lg">
           {/* Profile Section */}
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 border border-black flex items-center justify-center bg-gray-200">
-              <LuUser className="w-8 h-8" />
-            </div>
-            <div className="flex flex-col">
-              <div className="text-xl">{user.email}</div>
-              <div className="text-sm text-gray-600">
-                Last login: {new Date().toLocaleDateString()}
+          <div className="flex justify-between items-center bg-light-beige p-4 rounded-lg">
+            <div id="profile" className="flex items-center gap-4">
+              <div className="w-16 h-16 rounded-full border border-light-brown flex items-center justify-center bg-dark-brown ">
+                <LuUser className="w-8 h-8 text-lighter-brown" />
               </div>
+              <div className="flex flex-col">
+                <div className="text-xl">{user.email}</div>
+                <div className="text-sm text-gray-600">
+                  Last login: {new Date().toLocaleDateString()}
+                </div>
+              </div>
+            </div>
+            <div>
+              <LogoutButton>Log Out</LogoutButton>
             </div>
           </div>
 
-          <LogoutButton>Log Out</LogoutButton>
           {/* Logout Button
         <button
           onClick={handleLogout}
@@ -75,7 +79,7 @@ export default async function Profile() {
           Logout
         </button> */}
           {/* Best Score and WPM Section */}
-          <div className="border border-black p-4">
+          <div className="rounded-lg p-4 bg-light-beige">
             <div className="text-lg font-bold">All-Time Best</div>
             <div className="flex justify-between">
               <div>Best Score: {bestScore !== null ? bestScore : "N/A"}</div>
@@ -83,7 +87,7 @@ export default async function Profile() {
             </div>
           </div>
           {/* History Section */}
-          <div className="border border-black p-4">
+          <div className="bg-light-beige rounded-lg p-4">
             <div className="flex items-center justify-between mb-4">
               <div className="text-lg font-bold">Recent Attempts</div>
             </div>
@@ -110,9 +114,9 @@ export default async function Profile() {
           {/* Back Button */}
           <Link
             href="/region"
-            className="bg-gray-600 py-1 px-8 border border-black self-start"
+            className="bg-my-blue border border-white border-opacity-40 shadow-md hover:bg-my-pink transition-colors duration-300 text-dark-brown py-3 rounded"
           >
-            <div className="text-xl">Back</div>
+            <div className="text-3xl flex justify-center font-bold">begin!</div>
           </Link>
         </div>
       </div>
