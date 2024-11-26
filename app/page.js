@@ -16,16 +16,16 @@ export default function Home() {
           <div className="mt-12 flex text-3xl font-bold flex gap-24">
             <Link
               href="/login"
-              className="flex items-center text-lighter-brown rounded bg-dark-brown py-2 px-20"
+              className="flex items-center justify-center text-lighter-brown rounded bg-dark-brown py-2 min-w-[35rem]"
             >
               <div className="">start</div>
             </Link>
-            <Link
+            {/* <Link
               href="/about"
               className="flex items-center text-lighter-brown rounded bg-dark-brown px-20"
             >
               <div className="">about</div>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
