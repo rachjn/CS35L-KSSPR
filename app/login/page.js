@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { login } from "@/lib/actions/login";
 import { useTransition } from "react";
 import { HomeButton } from "@/components/HomeButton";
+import { SuccessAlert, Warning } from "@/components/Alerts";
 
 export default function Login() {
   const [isPending, startTransition] = useTransition();
@@ -68,8 +69,8 @@ export default function Login() {
               {...register("password")}
               className="mb-2 p-2 w-[15rem] border rounded text-dark-brown "
             />
-            {error && <p className="text-red-500">{error}</p>}
-            {success && <p className="text-green-500">{success}</p>}
+            {error && <Warning>{error}</Warning>}
+            {success && <SuccessAlert>{success}</SuccessAlert>}
 
             <div className="flex space-x-4">
               <button
