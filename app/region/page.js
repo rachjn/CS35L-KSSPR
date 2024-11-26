@@ -21,13 +21,25 @@ function RegionSquare({ name, color }) {
 export default function Region() {
   return (
     <PageShell title="pick a region">
-      {/* Profile Link Square */}
-      <Link
-        href="/profile"
-        className="fixed top-4 right-4 w-16 h-16 border border-black bg-gray-600 flex items-center justify-center hover:bg-gray-700 transition-colors"
-      >
-        <LuUser className="w-8 h-8 text-white" />
-      </Link>
+      {/* Profile and Leaderboard Buttons */}
+  <div className="fixed top-4 right-4 flex items-center gap-2">
+    {/* Leaderboard Button */}
+    <Link
+      href="/leaderboard"
+      className="w-16 h-16 border border-black bg-yellow-500 flex items-center justify-center hover:bg-yellow-600 transition-colors rounded"
+    >
+      👑
+    </Link>
+
+    {/* Profile Button */}
+    <Link
+      href="/profile"
+      className="w-16 h-16 border border-black bg-gray-600 flex items-center justify-center hover:bg-gray-700 transition-colors rounded"
+    >
+      <LuUser className="w-8 h-8 text-white" />
+    </Link>
+  </div>
+
 
       {/* Back Button */}
       <Link
@@ -36,6 +48,9 @@ export default function Region() {
       >
         <Text className="text-xl text-white">Back</Text>
       </Link>
+
+
+      
 
       {/* Region Grid */}
       <div className="grid grid-cols-3">
