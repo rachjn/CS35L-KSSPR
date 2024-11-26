@@ -8,7 +8,7 @@ export const HomeButton = () => {
         height={80}
         width={80}
         alt="ss-concepts"
-        className="rounded-lg absolute mx-12 my-4"
+        className="rounded-full absolute mx-12 my-4"
       />
     </Link>
   );

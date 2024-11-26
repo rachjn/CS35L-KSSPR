@@ -12,7 +12,7 @@ export const LogoutButton = ({ children }) => {
       <div className="flex">
         <div
           onClick={onClick}
-          className="px-8 py-1 rounded-md bg-light-brown lowercase text-xl text-dark-brown border border-white border-opacity-40 shadow-md cursor-pointer"
+          className="px-8 py-2 rounded-md bg-dark-brown lowercase text-xl text-lighter-brown border border-white border-opacity-40 cursor-pointer"
         >
           {children}
         </div>
