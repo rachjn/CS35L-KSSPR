@@ -1,43 +1,47 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+// import { useEffect, useState } from "react";
+// import { useRouter } from "next/navigation";
 import { PageShell } from "@/components/PageShell";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
 import { getScoreByUser } from "@/lib/actions/get-scores";
 import { LogoutButton } from "@/components/LogoutButton";
 import { HomeButton } from "@/components/HomeButton";
+import { currentUser } from "@/lib/auth";
 
-export default function Profile() {
-  const [username, setUsername] = useState("");
-  const [scores, setScores] = useState([]);
-  const [bestScore, setBestScore] = useState(null);
-  const [bestWpm, setBestWpm] = useState(null);
-  const router = useRouter();
+export default async function Profile() {
+  const user = await currentUser();
+  const scores = user.scores;
+  // const [username, setUsername] = useState("");
+  // const [scores, setScores] = useState([]);
+  // const [bestScore, setBestScore] = useState(null);
+  // const [bestWpm, setBestWpm] = useState(null);
+  // const router = useRouter();
 
-  useEffect(() => {
-    setUsername(localStorage.getItem("username") || "Guest");
+  // useEffect(() => {
+  //   setUsername(localStorage.getItem("username") || "Guest");
 
-    // Fetch user's scores
-    getScoreByUser(1).then((fetchedScores) => {
-      setScores(fetchedScores);
+  //   // Fetch user's scores
+  //   getScoreByUser(1).then((fetchedScores) => {
+  //     setScores(fetchedScores);
 
-      // Find best score and WPM
-      if (fetchedScores.length > 0) {
-        const maxScore = Math.max(...fetchedScores.map((score) => score.score));
-        const maxWpm = Math.max(...fetchedScores.map((score) => score.wpm));
-        setBestScore(maxScore);
-        setBestWpm(maxWpm);
-      }
-    });
-  }, []);
+  // Find best score and WPM
+  // if (scores.length > 0) {
+  //   const maxScore = Math.max(...scores.map((score) => score.score));
+  //   const maxWpm = Math.max(...scores.map((score) => score.wpm));
+  //   setBestScore(maxScore);
+  //   setBestWpm(maxWpm);
+  // }
 
   // const handleLogout = () => {
   //   localStorage.removeItem("username");
   //   localStorage.removeItem("userId");
   //   router.push("/login");
   // };
+
+  const bestScore =
+    scores.length > 0 ? Math.max(...scores.map((score) => score.score)) : null;
+  const bestWpm =
+    scores.length > 0 ? Math.max(...scores.map((score) => score.wpm)) : null;
 
   const recentScores = scores
     .slice()
@@ -55,7 +59,7 @@ export default function Profile() {
               <LuUser className="w-8 h-8" />
             </div>
             <div className="flex flex-col">
-              <div className="text-xl">{username}</div>
+              <div className="text-xl">{user.email}</div>
               <div className="text-sm text-gray-600">
                 Last login: {new Date().toLocaleDateString()}
               </div>
@@ -85,21 +89,22 @@ export default function Profile() {
             </div>
 
             <div className="flex flex-col gap-2">
-              {recentScores.map((score) => (
-                <div
-                  key={score.id}
-                  className="flex justify-between items-center py-2 border-b border-gray-200"
-                >
-                  <div>
-                    {score.challenge.region}: {score.score} - {score.wpm} WPM
+              {recentScores &&
+                recentScores.map((score) => (
+                  <div
+                    key={score.id}
+                    className="flex justify-between items-center py-2 border-b border-gray-200"
+                  >
+                    <div>
+                      {score.challenge.region}: {score.score} - {score.wpm} WPM
+                    </div>
+                    <div>
+                      {score.createdAt
+                        ? new Date(score.createdAt).toLocaleDateString()
+                        : "N/A"}
+                    </div>
                   </div>
-                  <div>
-                    {score.createdAt
-                      ? new Date(score.createdAt).toLocaleDateString()
-                      : "N/A"}
-                  </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
           {/* Back Button */}
