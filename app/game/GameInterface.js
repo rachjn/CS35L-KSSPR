@@ -87,6 +87,10 @@ export default function GameInterface() {
   return (
     <>
       <HomeButton />
+      <Link href="/profile" className="absolute right-12 top-8 p-2">
+        <LuUser className="w-12 h-12 text-dark-brown" />
+      </Link>
+
       <div className="flex justify-center items-center h-screen">
         <div className="bg-dark-brown p-12 rounded-lg flex flex-col items-center gap-6">
           {/* Timer Block */}
