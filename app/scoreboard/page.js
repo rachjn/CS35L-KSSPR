@@ -30,7 +30,7 @@ const Scoreboard = () => {
           top scores{" "}
         </div>
 
-        <div className="overflow-x-auto bg-dark-brown p-4 rounded-lg ">
+        <div className="overflow-x-auto bg-dark-brown p-6 rounded-lg ">
           <table className="bg-lighter-brown border border-white border-opacity-20 shadow">
             <thead>
               <tr>
@@ -71,34 +71,18 @@ const Scoreboard = () => {
           {/* Container for Square Buttons */}
           <div className="flex justify-center space-x-6">
             {/* Score Breakdown Button */}
-            <IconButton
+            <Link
               href="/breakdown"
-              icon={FaChartBar}
-              ariaLabel="Score Breakdown"
-              title="Score Breakdown"
-              bgColor="bg-blue-500"
-              hoverBgColor="hover:bg-blue-600"
-            />
-
-            {/* Play Again Button */}
-            <IconButton
+              className="text-dark-brown font-bold bg-my-blue px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
+            >
+              score breakdown
+            </Link>
+            <Link
               href="/region"
-              icon={FaRedo}
-              ariaLabel="Play Again"
-              title="Play Again"
-              bgColor="bg-green-500"
-              hoverBgColor="hover:bg-green-600"
-            />
-
-            {/* Game Overview Button */}
-            <IconButton
-              href="/region"
-              icon={FaPlay}
-              ariaLabel="Game Overview"
-              title="Game Overview"
-              bgColor="bg-purple-500"
-              hoverBgColor="hover:bg-purple-600"
-            />
+              className="text-dark-brown font-bold bg-my-pink px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
+            >
+              play again
+            </Link>
           </div>
         </div>
       </div>
