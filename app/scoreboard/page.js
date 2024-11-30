@@ -1,21 +1,36 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { PageShell } from "@/components/PageShell";
-import { Text } from "@/components/Text";
-import IconButton from "@/components/IconButton";
-import { FaRedo, FaChartBar, FaPlay } from "react-icons/fa";
 import { getTopScores } from "@/lib/actions/get-scores";
 import { HomeButton } from "@/components/HomeButton";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
 
+const regions = [
+  "all-regions",
+  "north-america",
+  "south-america",
+  "europe",
+  "africa",
+  "asia",
+  "oceania",
+  "caribbean",
+  "middle-east",
+  "central-america",
+];
+
 const Scoreboard = () => {
   const [topScores, setTopScores] = useState([]);
+  const [filteredRegion, setFilteredRegion ] = useState("all-regions");
 
   useEffect(() => {
     getTopScores(10).then((scores) => setTopScores(scores));
   }, []);
+
+  const filteredScores = 
+    filteredRegion === "all-regions"
+      ? topScores
+      : topScores.filter((score) => score.challenge.region === filteredRegion);
 
   return (
     <>
@@ -29,6 +44,19 @@ const Scoreboard = () => {
         <div className="text-5xl font-bold text-dark-brown lowercase ">
           top scores{" "}
         </div>
+
+        {/* Region Filter Dropdown */}
+        <select
+          className="px-4 py-2 border border-black rounded bg-white"
+          value={filteredRegion}
+          onChange={(e) => setFilteredRegion(e.target.value)}
+        >
+          {regions.map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
+        </select>
 
         <div className="overflow-x-auto bg-dark-brown p-6 rounded-lg ">
           <table className="bg-lighter-brown border border-white border-opacity-20 shadow">
@@ -46,7 +74,7 @@ const Scoreboard = () => {
               </tr>
             </thead>
             <tbody>
-              {topScores.map((score) => (
+              {filteredScores.map((score) => (
                 <tr
                   key={score.id}
                   className=" border-b border-light-beige border-opacity-40"
