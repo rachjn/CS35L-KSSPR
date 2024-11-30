@@ -1,7 +1,5 @@
-export const publicRoutes = ["/", "/about"];
-
-export const authRoutes = ["/login", "/signup"];
-
+export const publicRoutes = ["/", "/about", "/login", "/signup"];
+export const authRoutes = []; // Populate with routes that require authentication
 export const apiAuthPrefix = "/api/auth";
 
 // default redirect after logging in
