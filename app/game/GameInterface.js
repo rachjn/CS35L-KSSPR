@@ -5,6 +5,7 @@ import { Text } from "@/components/Text";
 import { getRandomChallengeByRegion } from "@/lib/actions/get-challenge";
 import { recordScore } from "@/lib/actions/get-scores";
 import Link from "next/link";
+import { LuUser } from "react-icons/lu";
 import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 
