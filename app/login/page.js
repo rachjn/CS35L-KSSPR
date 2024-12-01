@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { login } from "@/lib/actions/login";
@@ -11,18 +10,10 @@ import { SuccessAlert, Warning } from "@/components/Alerts";
 
 export default function Login() {
   const [isPending, startTransition] = useTransition();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [isLogin, setIsLogin] = useState(true); // State to toggle between login and signup
-  const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, handleSubmit } = useForm({
     defaultValues: {
       email: "",
       password: "",
@@ -98,7 +89,7 @@ export default function Login() {
             <div className="flex flex-col gap-4">
               <div>
                 <span className="font-bold text-base">
-                  "Oops I Had an Acc(id)ent"{" "}
+                  {'"'}Oops I Had an Acc(id)ent{'" '}
                 </span>
                 is an educational typing game that challenges users to type what
                 they hear — specifically, words spoken in different English

@@ -1,23 +1,16 @@
 "use client";
 
 import { HomeButton } from "@/components/HomeButton";
-import { Text } from "@/components/Text";
 import { getRandomChallengeByRegion } from "@/lib/actions/get-challenge";
 import { recordScore } from "@/lib/actions/get-scores";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
 import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
+import { removePunctuation } from "@/lib/utils";
 
 // in seconds
 const TIMER_DURATION = 10;
-
-// Utlity function to remove punctuation (don't want to penalize user for not putting a comma/period)
-// Removes punctuation marks: .,!?:;'"
-// Removes special characters: @#$%^&*()[]{}<>/|\~
-// Removes underscores
-// WIP: Remove em dash (For the North American challenge, if you remove the -, it doesn't register)
-const removePunctuation = (word) => word.replace(/[^\w\s]|_/g, "");
 
 function getErrorOutput(transcript, input) {
   const transcriptWords = transcript.split(" ").map(removePunctuation);

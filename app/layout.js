@@ -1,6 +1,4 @@
 import "./globals.css";
-import Image from "next/image";
-import Link from "next/link";
 
 export const metadata = {
   title: "oops! i had an acc(id)ent",

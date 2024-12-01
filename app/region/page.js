@@ -1,9 +1,6 @@
 import { HomeButton } from "@/components/HomeButton";
-import { PageShell } from "@/components/PageShell";
-import { Text } from "@/components/Text";
 import Link from "next/link";
 import { LuUser } from "react-icons/lu";
-import classNames from "classnames";
 
 function RegionSquare({ name, bgColor }) {
   // Convert the region name to a URL-friendly format
