@@ -1,12 +1,6 @@
-// app/profile/page.js
-
-// Import necessary components and libraries
-import { PageShell } from "@/components/PageShell";
 import Link from "next/link";
 import { LuClipboard, LuTrophy, LuUser } from "react-icons/lu";
-import { getScoreByUser } from "@/lib/actions/get-scores";
 import { LogoutButton } from "@/components/LogoutButton";
-import { HomeButton } from "@/components/HomeButton";
 import { currentUser } from "@/lib/auth";
 
 export default async function Profile() {
