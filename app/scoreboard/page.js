@@ -20,24 +20,28 @@ const regions = [
 ];
 
 const Scoreboard = () => {
-  const [topScores, setTopScores] = useState([]);
+  const [allScores, setAllScores] = useState([]);
   const [filteredRegion, setFilteredRegion] = useState("all-regions");
   const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
-    getTopScores(10).then((scores) => setTopScores(scores));
+    // Initially fetch ALL scores, not just the top ones
+    getTopScores().then((scores) => {
+      setAllScores(scores);
+    });
   }, []);
 
   // Filter the scores based on the selected region and search input
-  const filteredScores = topScores.filter((score) => {
+  const filteredScores = allScores.filter((score) => {
     const matchesRegion =
       filteredRegion === "all-regions" ||
       score.challenge.region === filteredRegion;
     const matchesUser =
       searchInput === "" ||
       score.user.email.toLowerCase().includes(searchInput.toLowerCase());
-    return matchesRegion && matchesUser;
-  });
+    return matchesRegion && matchesUser; // Limit to t10 scores after filtering
+  })
+  .slice(0, 10);
 
   return (
     <>
@@ -69,7 +73,7 @@ const Scoreboard = () => {
           {/* User Search Input */}
           <input
             type="text"
-            placeholder="Search User"
+            placeholder="search user"
             className="px-4 py-2 border border-black rounded bg-white"
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
