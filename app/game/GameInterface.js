@@ -27,9 +27,7 @@ function getErrorOutput(transcript, input) {
   return output;
 }
 
-export default function GameInterface() {
-  const searchParams = useSearchParams();
-  const region = searchParams.get("region");
+export default function GameInterface({ region }) {
   const [input, setInput] = useState("");
   const [challenge, setChallenge] = useState(null);
   const [errorOutput, setErrorOutput] = useState([]);

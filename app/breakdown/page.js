@@ -1,10 +1,4 @@
-// File: pages/breakdown.js
-
 import React from "react";
-import { PageShell } from "@/components/PageShell";
-import { Text } from "@/components/Text";
-import IconButton from "@/components/IconButton";
-import { FaArrowLeft, FaRedo, FaPlay } from "react-icons/fa";
 import { getScoreById } from "@/lib/actions/get-scores";
 import Link from "next/link";
 import { HomeButton } from "@/components/HomeButton";
