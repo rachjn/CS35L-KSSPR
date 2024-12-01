@@ -5,101 +5,92 @@ import { PageShell } from "@/components/PageShell";
 import { Text } from "@/components/Text";
 import IconButton from "@/components/IconButton";
 import { FaArrowLeft, FaRedo, FaPlay } from "react-icons/fa";
+import { getScoreById } from "@/lib/actions/get-scores";
+import Link from "next/link";
+import { HomeButton } from "@/components/HomeButton";
+import { LuUser } from "react-icons/lu";
 
-const Breakdown = () => {
-  // Dummy data representing user statistics
-  const users = [
-    {
-      id: 1,
-      username: "mobachessking",
-      score: 3000,
-      wpm: 200,
-      accuracy: 100,
-    },
-  ];
+async function Breakdown({ searchParams }) {
+  const id = parseInt((await searchParams).id);
+  if (!id) {
+    return <div>Invalid Score ID</div>;
+  }
+  const score = await getScoreById(id);
+  if (!score) {
+    return <div>Score not found</div>;
+  }
 
   return (
-    <PageShell title="Score Breakdown">
-      {/* Header */}
-      <div className="text-center mb-8 w-full max-w-4xl">
-        <Text className="text-3xl mb-4">Score Breakdown</Text>
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white dark:bg-gray-800">
+    <>
+      {/* Score Display */}
+      <HomeButton />
+      <Link href="/profile" className="absolute right-12 top-8 p-2">
+        <LuUser className="w-12 h-12 text-dark-brown" />
+      </Link>
+
+      <div className="flex justify-center items-center h-screen flex-col gap-6">
+        <div className="text-5xl font-bold text-dark-brown lowercase">
+          breakdown
+        </div>
+
+        <div className="overflow-x-auto bg-dark-brown p-6 rounded-lg">
+          <table className="bg-lighter-brown border border-white border-opacity-20 shadow">
             <thead>
               <tr>
-                <th className="py-2 px-4 bg-gray-200 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                <th className="py-2 px-4 text-dark-brown bg-light-brown text-left font-semibold lowercase">
                   Username
                 </th>
-                <th className="py-2 px-4 bg-gray-200 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
+                <th className="py-2 px-4 text-dark-brown bg-light-brown text-left font-semibold lowercase">
+                  Region
+                </th>
+                <th className="py-2 px-4 text-dark-brown bg-light-brown text-left font-semibold lowercase">
                   Score
-                </th>
-                <th className="py-2 px-4 bg-gray-200 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  WPM
-                </th>
-                <th className="py-2 px-4 bg-gray-200 dark:bg-gray-700 text-left text-xs font-semibold text-gray-700 dark:text-gray-200 uppercase tracking-wider">
-                  Accuracy (%)
                 </th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user) => (
+              {[score].map((score) => (
                 <tr
-                  key={user.id}
-                  className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600"
+                  key={score.id}
+                  className="border-b border-light-beige border-opacity-40"
                 >
-                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
-                    {user.username}
+                  <td className="text-dark-brown py-2 px-4 text-sm">
+                    {score.user.email}
                   </td>
-                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
-                    {user.score}
+                  <td className="text-dark-brown py-2 px-4 text-sm">
+                    {score.challenge.region}
                   </td>
-                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
-                    {user.wpm}
-                  </td>
-                  <td className="py-2 px-4 text-sm text-gray-700 dark:text-gray-200">
-                    {user.accuracy}
+                  <td className="text-dark-brown py-2 px-4 text-sm">
+                    {score.score}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+
+        {/* Buttons */}
+        <div className="space-y-4">
+          {/* Container for Square Buttons */}
+          <div className="flex justify-center space-x-6">
+            {/* Score Breakdown Button */}
+            <Link
+              href="/scoreboard"
+              className="text-dark-brown font-bold bg-my-blue px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
+            >
+              scoreboard
+            </Link>
+            <Link
+              href="/region"
+              className="text-dark-brown font-bold bg-my-pink px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
+            >
+              play again
+            </Link>
+          </div>
+        </div>
       </div>
-
-      {/* Navigation Buttons */}
-      <div className="flex justify-center space-x-6">
-        {/* Back Button */}
-        <IconButton
-          href="/scoreboard"
-          icon={FaArrowLeft}
-          ariaLabel="Back to Scoreboard"
-          title="Back to Scoreboard"
-          bgColor="bg-gray-500"
-          hoverBgColor="hover:bg-gray-600"
-        />
-
-        {/* Replay Button */}
-        <IconButton
-          href="/game"
-          icon={FaRedo}
-          ariaLabel="Play Again"
-          title="Play Again"
-          bgColor="bg-green-500"
-          hoverBgColor="hover:bg-green-600"
-        />
-
-        {/* Play Button */}
-        <IconButton
-          href="/region"
-          icon={FaPlay}
-          ariaLabel="Game Overview"
-          title="Game Overview"
-          bgColor="bg-purple-500"
-          hoverBgColor="hover:bg-purple-600"
-        />
-      </div>
-    </PageShell>
+    </>
   );
-};
+}
 
 export default Breakdown;

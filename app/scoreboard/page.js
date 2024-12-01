@@ -32,16 +32,17 @@ const Scoreboard = () => {
   }, []);
 
   // Filter the scores based on the selected region and search input
-  const filteredScores = allScores.filter((score) => {
-    const matchesRegion =
-      filteredRegion === "all-regions" ||
-      score.challenge.region === filteredRegion;
-    const matchesUser =
-      searchInput === "" ||
-      score.user.email.toLowerCase().includes(searchInput.toLowerCase());
-    return matchesRegion && matchesUser; // Limit to t10 scores after filtering
-  })
-  .slice(0, 10);
+  const filteredScores = allScores
+    .filter((score) => {
+      const matchesRegion =
+        filteredRegion === "all-regions" ||
+        score.challenge.region === filteredRegion;
+      const matchesUser =
+        searchInput === "" ||
+        score.user.email.toLowerCase().includes(searchInput.toLowerCase());
+      return matchesRegion && matchesUser; // Limit to t10 scores after filtering
+    })
+    .slice(0, 10);
 
   return (
     <>
@@ -53,7 +54,7 @@ const Scoreboard = () => {
 
       <div className="flex justify-center items-center h-screen flex-col gap-6">
         <div className="text-5xl font-bold text-dark-brown lowercase">
-          top scores{" "}
+          top scores
         </div>
 
         <div className="flex gap-4">
@@ -108,7 +109,7 @@ const Scoreboard = () => {
                     {score.challenge.region}
                   </td>
                   <td className="text-dark-brown py-2 px-4 text-sm">
-                    {score.value}
+                    {score.score}
                   </td>
                 </tr>
               ))}
@@ -116,25 +117,12 @@ const Scoreboard = () => {
           </table>
         </div>
 
-        {/* Buttons */}
-        <div className="space-y-4">
-          {/* Container for Square Buttons */}
-          <div className="flex justify-center space-x-6">
-            {/* Score Breakdown Button */}
-            <Link
-              href="/breakdown"
-              className="text-dark-brown font-bold bg-my-blue px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
-            >
-              score breakdown
-            </Link>
-            <Link
-              href="/region"
-              className="text-dark-brown font-bold bg-my-pink px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
-            >
-              play again
-            </Link>
-          </div>
-        </div>
+        <Link
+          href="/region"
+          className="text-dark-brown font-bold bg-my-pink px-8 py-2 rounded border border-white border-opacity-40 shadow hover:scale-[105%] transform transition-transform duration-200"
+        >
+          play again
+        </Link>
       </div>
     </>
   );

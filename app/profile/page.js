@@ -2,10 +2,11 @@ import Link from "next/link";
 import { LuClipboard, LuTrophy, LuUser } from "react-icons/lu";
 import { LogoutButton } from "@/components/LogoutButton";
 import { currentUser } from "@/lib/auth";
+import { getUserScores } from "@/lib/actions/get-scores";
 
 export default async function Profile() {
   const user = await currentUser();
-  const scores = user && user.scores ? user.scores : [];
+  const scores = user ? await getUserScores() : [];
 
   const bestScore =
     scores.length > 0 ? Math.max(...scores.map((score) => score.score)) : null;
@@ -56,9 +57,6 @@ export default async function Profile() {
               <div className="flex flex-col">
                 <div className="text-xl">
                   {user.email ? user.email : "No Email Provided"}
-                </div>
-                <div className="text-xs text-dark-brown">
-                  Last login: {new Date().toLocaleDateString()}
                 </div>
               </div>
             </div>

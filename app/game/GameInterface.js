@@ -35,8 +35,7 @@ export default function GameInterface() {
   const [errorOutput, setErrorOutput] = useState([]);
   const [timerSeconds, setTimerSeconds] = useState(TIMER_DURATION);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [score, setScore] = useState(0); // State for the score
-  const [wpm, setWpm] = useState(0); // State for the wpm
+  const [score, setScore] = useState(null);
 
   useEffect(() => {
     async function setRandomChallenge() {
@@ -63,12 +62,9 @@ export default function GameInterface() {
 
   useEffect(() => {
     if (isGameOver && challenge) {
-      // const userId = localStorage.getItem("userId"); // Placeholder until auth is finished
-      recordScore(1, challenge.id, input, timerSeconds).then((result) => {
-        // Change hardcoded 1 back to userId
-        setScore(result.score); // Dynamically update score state
-        setWpm(result.wpm); // Dynamically update wpm state
-      });
+      recordScore(challenge.id, input, timerSeconds).then((result) =>
+        setScore(result),
+      );
     }
   }, [isGameOver, challenge, input, timerSeconds]);
 
@@ -102,16 +98,13 @@ export default function GameInterface() {
           {challenge && <audio controls src={challenge.audioURL} />}
 
           {/* Score Block */}
-          {isGameOver && (
+          {isGameOver && score && (
             <div className="flex items-center justify-center flex-col text-dark-brown bg-light-beige py-4 px-12 rounded">
               <div className="font-bold text-4xl">game over!</div>
-              <div className="text-base lowercase">
-                Score: {score} - {wpm} WPM
-              </div>
               {/* Button to navigate to Scoreboard */}
-              <Link href="/scoreboard">
+              <Link href={`/breakdown?id=${score.id}`}>
                 <button className="mt-4 bg-my-pink text-dark-brown py-2 px-8 font-bold border border-white border-opacity-40 shadow rounded lowercase">
-                  View Scoreboard
+                  Score Breakdown
                 </button>
               </Link>
             </div>
@@ -120,7 +113,7 @@ export default function GameInterface() {
           {/* Text Input Area */}
           <div className="flex flex-col gap-4 min-w-[40rem]  ">
             {/* Area where words show up if we are doing it */}
-            <div className="min-h-20 border border-light-brown p-4 bg-lighter-brown rounded min-h-[10rem]">
+            <div className="min-h-20 border border-light-brown p-4 bg-lighter-brown rounded">
               {errorOutput.map(({ word, error }, index) =>
                 error ? (
                   <span key={index} className="text-lg text-red-500">

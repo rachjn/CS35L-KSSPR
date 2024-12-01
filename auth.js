@@ -14,33 +14,13 @@ export const {
       if (token.sub && session.user) {
         session.id = parseInt(token.sub, 10);
       }
-      session.user.scores = token.scores || [];
-      // console.log({ sessionToken: token, session });
+      session.user.id = parseInt(token.id);
+
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
-        try {
-          const scores = await prisma.score.findMany({
-            where: { userId: parseInt(user.id, 10) },
-            include: {
-              challenge: true,
-            },
-          });
-
-          // console.log("Fetched Scores for JWT:", scores);
-
-          token.scores = scores.map((score) => ({
-            id: score.id,
-            score: score.score,
-            wpm: score.wpm,
-            challengeId: score.challengeId,
-            challenge: score.challenge,
-            createdAt: score.createdAt,
-          }));
-        } catch (error) {
-          console.error("Error fetching scores in JWT callback:", error);
-        }
+        token.id = user.id;
       }
       return token;
     },
