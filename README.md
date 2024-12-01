@@ -16,52 +16,23 @@ Instructions on downloading both can be found [here](https://docs.npmjs.com/down
 
 These commands should be run in the root project directory (the one that this file is in).
 
-1. Run `npm install`. This will install the necessary packages for both the client Next.js app and the Express server.
-2. To start developing, run `npm run dev`. This will create local servers serving both the website itself and the backend endpoints. These servers will refresh upon any changes to the code so you don't have to worry about re-running this command while developing.
-3. To run a production version of the website run the following commands:
+1. Run `npm install`. This will install the necessary packages for running the app.
+2. Run `npx prisma migrate dev`. This will initialize the SQLite database in the `prod.db` file, run the seed scripts, and generate the type definitions. For more information on how to interact with the database, go to [the Database section](#database).
+3. Run `npx auth secret` to generate a secret key to use to sign JWTs for authentication.
+4. Finally, to start developing, run `npm run dev`. This will create a local server serving both the website itself and the backend endpoints. These server refreshes upon any changes to the code so you do not have to worry about re-running this command while developing.
+5. To run a production version of the website run the following commands:
 
 ```sh
 npm run build
 npm start
 ```
 
----
+## Database
 
-# Next.js documentation
+We use [SQLite](https://www.sqlite.org/) for storing data related to users, challenges, and scores. The [Prisma](https://www.prisma.io/) ORM enables us to interact with this database in a simple, more intuitive way with pure Node.js rather than SQL queries.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+If you make any changes to the database (the `schema.prisma` file), you must create a migration so the database can migrate the database to the new desired state. You can do this by running `npx prisma migrate dev` and following its instructions.
 
-## Getting Started
+If you just want to try your change locally, you can run `npx prisma db push` to migrate your local database without creating a formal migration file.
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+It can be difficult to know what is in your database at any given time. Prisma allows us to view the tables/rows in a web GUI using the `npx prisma studio` command.
