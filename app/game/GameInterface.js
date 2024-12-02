@@ -8,7 +8,6 @@ import { LuUser } from "react-icons/lu";
 import { useSearchParams } from "next/navigation";
 import { startTransition, useEffect, useState } from "react";
 import { removePunctuation } from "@/lib/utils";
-import { LuUser } from "react-icons/lu";
 
 // in seconds
 const TIMER_DURATION = 10;
