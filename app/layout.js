@@ -1,5 +1,6 @@
 import "./globals.css";
 import { ClickSound } from "../components/ClickSound";
+import ImageCursor from "../components/ImageCursor";
 
 export default function RootLayout({ children }) {
   return (
@@ -22,7 +23,8 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://use.typekit.net/org5cfx.css" />
         <link rel="stylesheet" href="https://use.typekit.net/cdd6oyg.css" />
       </head>
-      <body className="font-greycliff">
+      <body className="font-greycliff cursor-none">
+        <ImageCursor />
         <ClickSound />
         {children}
       </body>
