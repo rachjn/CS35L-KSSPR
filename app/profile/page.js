@@ -58,10 +58,14 @@ export default async function Profile() {
                 <div className="text-xl">
                   {user.email ? user.email : "No Email Provided"}
                 </div>
+                <div className="text-sm text-gray-500">
+                  Member since: {user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A"}
+                </div>
               </div>
             </div>
             <LogoutButton>Log Out</LogoutButton>
           </div>
+
 
           {/* Best Score and WPM Section */}
           <div className="border border-white border-opacity-40 shadow rounded-lg p-4 bg-light-beige">
