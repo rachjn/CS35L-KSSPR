@@ -1,9 +1,5 @@
 import "./globals.css";
-
-export const metadata = {
-  title: "oops! i had an acc(id)ent",
-  description: "Fill in later",
-};
+import { ClickSound } from "../components/ClickSound";
 
 export default function RootLayout({ children }) {
   return (
@@ -26,7 +22,10 @@ export default function RootLayout({ children }) {
         <link rel="stylesheet" href="https://use.typekit.net/org5cfx.css" />
         <link rel="stylesheet" href="https://use.typekit.net/cdd6oyg.css" />
       </head>
-      <body className="font-greycliff">{children}</body>
+      <body className="font-greycliff">
+        <ClickSound />
+        {children}
+      </body>
     </html>
   );
 }
