@@ -35,7 +35,11 @@
 - Can also see an overview of their most recent games played
 
 4. Live Feedback
-- Users can view live feedback based on their typing input if their words are correct or incorrect 
+- Users can view live feedback based on their typing input if their words are correct or incorrect
+
+5. User Interactive Features
+- To add fun and joy, we added sound effects - both from background music and cursor clicks!
+- Users can also view an aesthetic cursor on the screen. 
 
 
 
