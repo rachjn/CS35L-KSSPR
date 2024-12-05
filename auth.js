@@ -15,12 +15,26 @@ export const {
         session.id = parseInt(token.sub, 10);
       }
       session.user.id = parseInt(token.id);
+      
 
+      
+      // Fetch user data directly from database to ensure we have createdAt
+      const user = await prisma.user.findUnique({
+        where: {
+          id: parseInt(token.id)
+        }
+      });
+
+      if (user?.createdAt) {
+        session.user.createdAt = user.createdAt;
+      }
+      
       return session;
     },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.createdAt = user.createdAt;
       }
       return token;
     },
