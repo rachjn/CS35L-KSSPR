@@ -1,6 +1,7 @@
 import "./globals.css";
 import { ClickSound } from "../components/ClickSound";
 import ImageCursor from "../components/ImageCursor";
+import { BackgroundMusic } from "../components/BackgroundMusic";
 
 export default function RootLayout({ children }) {
   return (
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
       <body className="font-greycliff cursor-none">
         <ImageCursor />
         <ClickSound />
+        <BackgroundMusic />
         {children}
       </body>
     </html>
