@@ -1,6 +1,8 @@
 # Oops I Had an Acc(id)ent
 
-Oops I Had an Acc(id)ent is a typing game designed to improve the user's understaning of accented English, visually inspired by the Recaptcha test. Just like Recaptcha challenges users to prove they are human by identifying distorted letters, our game challenges players to understand and type accented English, demonstrating their adaptability. Players choose a region, listen to accented speech, and type what they hear to prevent their robot from falling, ultimately earning the 'I’m not a robot' checkmark by embracing diversity and new perspectives.
+<img width="1156" alt="Main Page" src="https://github.com/user-attachments/assets/4dc0ee09-0588-494b-aa9b-8796df4e5654">
+
+"Oops I Had an Acc(id)ent" is an educational typing game that challenges users to type what they hear — specifically, words spoken in different English accents from around the world. By practicing with these accents, you’ll improve your listening and typing skills while also becoming more comfortable with how English sounds across different cultures and regions. Our goal is to help users build a deeper understanding and appreciation for accents, while also promoting inclusivity and empathy.
 
 ## Developing Locally
 
