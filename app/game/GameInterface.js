@@ -9,7 +9,7 @@ import { startTransition, useEffect, useState } from "react";
 import { removePunctuation } from "@/lib/utils";
 
 // in seconds
-const TIMER_DURATION = 10;
+const TIMER_DURATION = 30;
 
 function getErrorOutput(transcript, input) {
   const transcriptWords = transcript.split(" ").map(removePunctuation);
