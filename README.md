@@ -4,6 +4,41 @@
 
 "Oops I Had an Acc(id)ent" is an educational typing game that challenges users to type what they hear — specifically, words spoken in different English accents from around the world. By practicing with these accents, you’ll improve your listening and typing skills while also becoming more comfortable with how English sounds across different cultures and regions. Our goal is to help users build a deeper understanding and appreciation for accents, while also promoting inclusivity and empathy.
 
+<img width="1173" alt="Map Page" src="https://github.com/user-attachments/assets/196d53a4-2b91-48ce-aa9d-0a3aaeb634db">
+
+### Main Features 
+1. User Authentication / Authorization
+- Users can create an account using our sign-in page 
+- Data from user interactions is associated with their account
+
+2. Upload data from the client to the back-end, which persists (saves) the data
+ to the server’s file system: 
+- Users play our game and their input is uploaded to our backend
+- Score is calculated from input and persisted in the database
+
+3. Meaningfully search through server-side data: 
+- Users can search for scores on the scoreboard by inputting usernames
+- Users can also filter scores by region
+
+<img width="1159" alt="Game Page" src="https://github.com/user-attachments/assets/8f3e4a00-3315-4689-ae5b-cb6afc1d29bb">
+
+### Additional Features 
+1. Score Breakdown
+- Users can see a calculated score breakdown on a separate page after their game ends
+- Can share a link to this page with others
+
+2. Scoreboard 
+- Users can view a sorted list of top scores across all users
+
+3. Profile
+- Users can view their highest scores and WPM on their profile page
+- Can also see an overview of their most recent games played
+
+4. Live Feedback
+- Users can view live feedback based on their typing input if their words are correct or incorrect 
+
+
+
 ## Developing Locally
 
 ### Prerequisites
