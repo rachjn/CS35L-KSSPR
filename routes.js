@@ -1,4 +1,11 @@
-export const publicRoutes = ["/", "/about", "/login", "/signup"];
+export const publicRoutes = [
+  "/",
+  "/about",
+  "/login",
+  "/signup",
+  "/sounds/game_loop.wav",
+  "/sounds/keyboard_click.wav",
+];
 export const authRoutes = []; // Populate with routes that require authentication
 export const apiAuthPrefix = "/api/auth";
 

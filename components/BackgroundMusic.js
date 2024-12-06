@@ -1,34 +1,41 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-// Create a single Audio instance outside the component
-const music = new Audio("/sounds/game_loop.wav");
-music.loop = true;
+let music = null;
 
 export function BackgroundMusic() {
   const pathname = usePathname();
+  const [hasInteracted, setHasInteracted] = useState(false);
 
   useEffect(() => {
-    // Don't play music on game page
-    if (pathname === "/game") {
-      music.pause();
-      return;
-    }
-
-    // Resume playing from where it was
-    const playPromise = music.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.log("Error playing music:", error);
-      });
-    }
-
-    return () => {
-      if (pathname === "/game") {
-        music.pause();
+    const handleInteraction = () => {
+      if (!hasInteracted) {
+        setHasInteracted(true);
+        music = new Audio("/sounds/game_loop.wav");
+        music.loop = true;
+        music.play();
       }
     };
+
+    window.addEventListener('click', handleInteraction);
+    window.addEventListener('keydown', handleInteraction);
+    
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+      window.removeEventListener('keydown', handleInteraction);
+    };
+  }, [hasInteracted]);
+
+
+  useEffect(() => {
+    if (!music) return;
+    
+    if (pathname === "/game") {
+      music.pause();
+    } else {
+      music.play();
+    }
   }, [pathname]);
 
   return null;
